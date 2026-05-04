@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M'Balou Fatoumata Camara — Technicien Support IT / Administrateur Systèmes & Réseaux</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #1a1a24;
+    --border: rgba(255,255,255,0.07);
+    --accent: #00e5ff;
+    --accent2: #7c3aed;
+    --accent3: #10b981;
+    --text: #e8e8f0;
+    --text-muted: #6b6b85;
+    --text-dim: #3a3a55;
+    --mono: 'Space Mono', monospace;
+    --display: 'Syne', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* GRID NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.015) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 120px 60px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(0,229,255,0.07);
+    border: 1px solid rgba(0,229,255,0.2);
+    border-radius: 2px;
+    padding: 6px 14px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 40px;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-name {
+    font-family: var(--display);
+    font-size: clamp(52px, 8vw, 96px);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 28px;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+
+  .hero-name span {
+    display: block;
+    color: var(--accent);
+  }
+
+  .hero-title {
+    font-family: var(--display);
+    font-size: clamp(18px, 2.5vw, 26px);
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .hero-desc {
+    max-width: 680px;
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.9;
+    margin-bottom: 48px;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 48px;
+    margin-bottom: 48px;
+    animation: fadeUp 0.8s 0.4s ease both;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .stat-num {
+    font-family: var(--display);
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 16px;
+    animation: fadeUp 0.8s 0.5s ease both;
+  }
+
+  .btn-primary {
+    padding: 14px 32px;
+    background: var(--accent);
+    color: var(--bg);
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-primary:hover {
+    background: #fff;
+    transform: translateY(-2px);
+  }
+
+  .btn-outline {
+    padding: 14px 32px;
+    background: transparent;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* GLOWING ORB */
+  .hero-orb {
+    position: absolute;
+    top: 50%;
+    right: 5%;
+    width: 500px;
+    height: 500px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    animation: fadeUp 1s 0.2s ease both;
+  }
+
+  .orb-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(0,229,255,0.15);
+    animation: spin linear infinite;
+  }
+
+  .orb-ring:nth-child(1) { inset: 0; animation-duration: 20s; }
+  .orb-ring:nth-child(2) { inset: 40px; animation-duration: 15s; animation-direction: reverse; border-color: rgba(124,58,237,0.15); }
+  .orb-ring:nth-child(3) { inset: 80px; animation-duration: 25s; border-color: rgba(16,185,129,0.1); }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .orb-center {
+    position: absolute;
+    inset: 100px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,229,255,0.08) 0%, transparent 70%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .orb-icon {
+    font-size: 60px;
+    filter: drop-shadow(0 0 30px rgba(0,229,255,0.5));
+  }
+
+  /* SECTIONS */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 100px 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.2;
+    max-width: 100px;
+  }
+
+  .section-title {
+    font-family: var(--display);
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 60px;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0 60px;
+  }
+
+  /* SKILLS */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .skill-card {
+    background: var(--surface);
+    padding: 32px;
+    transition: background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .skill-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .skill-card:hover::before { opacity: 1; }
+  .skill-card:hover { background: var(--surface2); }
+
+  .skill-category {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    font-weight: 700;
+  }
+
+  .skill-name {
+    font-family: var(--display);
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tag {
+    padding: 4px 10px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    transition: all 0.2s;
+  }
+
+  .tag:hover {
+    border-color: rgba(0,229,255,0.3);
+    color: var(--accent);
+  }
+
+  /* EXPERIENCE */
+  .exp-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .exp-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+
+  .exp-item:hover { border-color: rgba(0,229,255,0.2); }
+
+  .exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    gap: 20px;
+  }
+
+  .exp-role {
+    font-family: var(--display);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .exp-company {
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+
+  .exp-date {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+    text-align: right;
+    background: rgba(0,229,255,0.06);
+    border: 1px solid rgba(0,229,255,0.1);
+    padding: 6px 12px;
+    height: fit-content;
+  }
+
+  .exp-achievements {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .exp-achievements li {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .exp-achievements li::before {
+    content: '▸';
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .impact-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(16,185,129,0.1);
+    border: 1px solid rgba(16,185,129,0.2);
+    padding: 3px 10px;
+    font-size: 11px;
+    color: var(--accent3);
+    font-weight: 700;
+    margin-left: 8px;
+  }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--border);
+  }
+
+  .project-card {
+    background: var(--surface);
+    padding: 48px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+    border: 1px solid transparent;
+  }
+
+  .project-card:hover {
+    background: var(--surface2);
+    border-color: rgba(0,229,255,0.1);
+  }
+
+  .project-num {
+    font-family: var(--display);
+    font-size: 72px;
+    font-weight: 800;
+    color: var(--text-dim);
+    position: absolute;
+    top: 32px;
+    right: 40px;
+    line-height: 1;
+    pointer-events: none;
+    transition: color 0.3s;
+  }
+
+  .project-card:hover .project-num {
+    color: rgba(0,229,255,0.08);
+  }
+
+  .project-type {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 16px;
+    font-weight: 700;
+  }
+
+  .project-title {
+    font-family: var(--display);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  .project-desc {
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.8;
+    margin-bottom: 24px;
+  }
+
+  .project-result {
+    padding: 16px 20px;
+    background: rgba(0,229,255,0.04);
+    border-left: 2px solid var(--accent);
+    font-size: 12px;
+    color: var(--text);
+    margin-bottom: 24px;
+    line-height: 1.7;
+  }
+
+  .project-result strong {
+    color: var(--accent);
+  }
+
+  .project-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .stack-tag {
+    padding: 4px 12px;
+    border: 1px solid var(--border);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    background: rgba(255,255,255,0.02);
+  }
+
+  /* EDUCATION */
+  .edu-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .edu-degree {
+    font-family: var(--display);
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .edu-school {
+    font-size: 14px;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .edu-status {
+    display: inline-block;
+    background: rgba(0,229,255,0.1);
+    border: 1px solid rgba(0,229,255,0.3);
+    padding: 4px 12px;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .edu-extras {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .edu-extra-item {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    padding: 14px 20px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+  }
+
+  .edu-extra-icon {
+    width: 32px;
+    height: 32px;
+    background: rgba(0,229,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 14px;
+  }
+
+  .edu-extra-text {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* CONTACT */
+  .contact-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact-block::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 100%, rgba(0,229,255,0.05), transparent 60%);
+    pointer-events: none;
+  }
+
+  .contact-title {
+    font-family: var(--display);
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: 800;
+    margin-bottom: 16px;
+    line-height: 1.1;
+  }
+
+  .contact-sub {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 48px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 48px;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    border: 1px solid var(--border);
+    color: var(--text);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: all 0.2s;
+  }
+
+  .contact-link:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .contact-avail {
+    font-size: 12px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .avail-dot {
+    width: 8px; height: 8px;
+    background: var(--accent3);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 32px 60px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+  }
+
+  /* SCROLL ANIMATIONS */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .hero { padding: 100px 24px 60px; }
+    section { padding: 60px 24px; }
+    .hero-orb { display: none; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .edu-block { grid-template-columns: 1fr; gap: 40px; }
+    .exp-header { flex-direction: column; }
+    .hero-stats { gap: 28px; }
+    .contact-block { padding: 48px 24px; }
+    footer { padding: 24px; flex-direction: column; gap: 12px; text-align: center; }
+    .divider { margin: 0 24px; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">MFC</div>
+  <ul class="nav-links">
+    <li><a href="#competences">Compétences</a></li>
+    <li><a href="#experience">Expérience</a></li>
+    <li><a href="#projets">Projets</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+
+    <div class="hero-tag">Disponible immédiatement — Alternance 12-24 mois · Île-de-France</div>
+
+    <h1 class="hero-name">
+      M'Balou<br>
+      <span>Fatoumata</span><br>
+      Camara
+    </h1>
+
+    <p class="hero-title">Technicien Support IT · Administrateur Systèmes & Réseaux — Active Directory · Azure · Cybersécurité</p>
+
+    <p class="hero-desc">
+      Étudiante en Bachelor Administration Systèmes, Réseaux et Cybersécurité (Bac+3).
+      Je conçois, déploie et sécurise des infrastructures IT hybrides — de la mise en place
+      d'Active Directory à la synchronisation cloud Azure, en passant par le support utilisateurs
+      à haute valeur ajoutée. Mon objectif : garantir un environnement fiable, sécurisé, et performant.
+    </p>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-num">~90%</span>
+        <span class="stat-label">Incidents N1 résolus<br>en autonomie</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">15+</span>
+        <span class="stat-label">Collaborateurs<br>onboardés</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">10/sem</span>
+        <span class="stat-label">Tickets gérés<br>en moyenne</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">3</span>
+        <span class="stat-label">Infrastructures<br>déployées</span>
+      </div>
+    </div>
+
+    <div class="hero-cta">
+      <a href="mailto:mbaloufatoumata033@gmail.com" class="btn-primary">Me contacter</a>
+      <a href="#projets" class="btn-outline">Voir mes projets</a>
+    </div>
+  </div>
+
+  <!-- Decorative Orb -->
+  <div class="hero-orb">
+    <div class="orb-ring"></div>
+    <div class="orb-ring"></div>
+    <div class="orb-ring"></div>
+    <div class="orb-center">
+      <div class="orb-icon">🖥️</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- COMPETENCES -->
+<section id="competences">
+  <div class="section-label reveal">Compétences Techniques</div>
+  <h2 class="section-title reveal">Ce que<br>je maîtrise</h2>
+
+  <div class="skills-grid reveal">
+
+    <div class="skill-card">
+      <div class="skill-category">Systèmes & Cloud</div>
+      <div class="skill-name">Windows Server<br>& Microsoft Azure</div>
+      <div class="skill-tags">
+        <span class="tag">Active Directory</span>
+        <span class="tag">GPO</span>
+        <span class="tag">DNS</span>
+        <span class="tag">DHCP</span>
+        <span class="tag">Microsoft Entra ID</span>
+        <span class="tag">Azure AD Connect</span>
+        <span class="tag">SSO</span>
+        <span class="tag">MFA</span>
+        <span class="tag">Conditional Access</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-category">Réseaux & Sécurité</div>
+      <div class="skill-name">Infrastructure<br>Réseau</div>
+      <div class="skill-tags">
+        <span class="tag">TCP/IP</span>
+        <span class="tag">VLAN</span>
+        <span class="tag">VPN</span>
+        <span class="tag">Pare-feu</span>
+        <span class="tag">Cisco NetAcad</span>
+        <span class="tag">Cybersécurité</span>
+        <span class="tag">Gestion des accès</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-category">Support & Service Desk</div>
+      <div class="skill-name">Support IT<br>Niveau 1 & 2</div>
+      <div class="skill-tags">
+        <span class="tag">Ticketing</span>
+        <span class="tag">Onboarding</span>
+        <span class="tag">Offboarding</span>
+        <span class="tag">Diagnostic incidents</span>
+        <span class="tag">Support présentiel</span>
+        <span class="tag">Support distant</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-category">Gestion & Documentation</div>
+      <div class="skill-name">Parc Informatique<br>& Procédures</div>
+      <div class="skill-tags">
+        <span class="tag">Windows</span>
+        <span class="tag">macOS</span>
+        <span class="tag">Linux Ubuntu/Debian</span>
+        <span class="tag">Base de connaissances</span>
+        <span class="tag">Inventaire</span>
+        <span class="tag">Déploiement postes</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-category">Identités & Administration</div>
+      <div class="skill-name">Gestion des<br>Identités Hybrides</div>
+      <div class="skill-tags">
+        <span class="tag">AGDLP</span>
+        <span class="tag">OU / Groupes AD</span>
+        <span class="tag">Relation d'approbation</span>
+        <span class="tag">UPN Suffixes</span>
+        <span class="tag">Sync AD ↔ Azure</span>
+        <span class="tag">Audit & Logs</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-category">Langues</div>
+      <div class="skill-name">Communication<br>& Documentation</div>
+      <div class="skill-tags">
+        <span class="tag">Français — Courant</span>
+        <span class="tag">Anglais — Technique</span>
+        <span class="tag">Rédaction procédures</span>
+        <span class="tag">Veille technologique</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label reveal">Parcours Professionnel</div>
+  <h2 class="section-title reveal">Expériences<br>concrètes</h2>
+
+  <div class="exp-list">
+
+    <div class="exp-item reveal">
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">Technicien Support Informatique</div>
+          <div class="exp-company">DIGIVOLUTION — Paris, France</div>
+        </div>
+        <div class="exp-date">Avr. 2025 — Août 2025</div>
+      </div>
+      <ul class="exp-achievements">
+        <li>
+          Onboarding complet de <strong>15 collaborateurs</strong> (Windows, macOS, Linux) : configuration des postes, intégration Active Directory / Entra ID et déploiement applicatif — <em>zéro incident post-intégration</em>
+          <span class="impact-badge">+15 utilisateurs opérationnels</span>
+        </li>
+        <li>
+          Gestion et résolution de <strong>~10 tickets/semaine</strong> (incidents matériels, logiciels, accès) avec un taux de résolution autonome de <strong>~90% des incidents de niveau 1</strong>
+          <span class="impact-badge">90% résolution N1</span>
+        </li>
+        <li>
+          Enrichissement de la <strong>base de connaissances</strong> (procédures, guides utilisateurs) → réduction mesurable du temps moyen de traitement des incidents
+        </li>
+        <li>
+          Gestion complète du <strong>parc informatique</strong> : inventaire, suivi des stocks, gestion des périphériques et optimisation des processus IT
+        </li>
+      </ul>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">Technicien Support IT</div>
+          <div class="exp-company">URMVI — Guinée</div>
+        </div>
+        <div class="exp-date">Fév. 2024 — Juil. 2024</div>
+      </div>
+      <ul class="exp-achievements">
+        <li>Préparation et configuration de postes utilisateurs, gestion complète de l'onboarding et de l'offboarding</li>
+        <li>Assistance utilisateurs et résolution d'incidents matériels et logiciels en environnement professionnel</li>
+        <li>Administration des comptes et droits d'accès, documentation des procédures IT</li>
+        <li>Inventaire et gestion du stock matériel informatique, participation à des <strong>projets de modernisation de l'infrastructure IT</strong></li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PROJETS -->
+<section id="projets">
+  <div class="section-label reveal">Projets Techniques 2026</div>
+  <h2 class="section-title reveal">Ce que<br>j'ai construit</h2>
+
+  <div class="projects-grid reveal">
+
+    <!-- PROJET 1 -->
+    <div class="project-card">
+      <div class="project-num">01</div>
+      <div class="project-type">Infrastructure Hybride</div>
+      <h3 class="project-title">Active Directory &<br>Microsoft Entra ID Sync</h3>
+      <p class="project-desc">
+        Conception et déploiement d'une infrastructure hybride complète : installation de Windows Server 2022,
+        promotion en contrôleur de domaine, création d'une structure organisationnelle (OU, groupes AGDLP),
+        synchronisation avec Microsoft Entra ID via Azure AD Connect, mise en place du MFA, SSO et
+        Conditional Access. Configuration d'un domaine public et vérification DNS.
+      </p>
+      <div class="project-result">
+        <strong>Résultat :</strong> Infrastructure 100% fonctionnelle permettant une authentification sécurisée
+        unifiée on-premise et cloud. Les utilisateurs locaux apparaissent automatiquement dans Azure
+        après synchronisation. Accès hybride opérationnel en environnement simulé entreprise.
+      </div>
+      <div class="project-stack">
+        <span class="stack-tag">Windows Server 2022</span>
+        <span class="stack-tag">Active Directory</span>
+        <span class="stack-tag">Microsoft Entra ID</span>
+        <span class="stack-tag">Azure AD Connect</span>
+        <span class="stack-tag">MFA</span>
+        <span class="stack-tag">SSO</span>
+        <span class="stack-tag">DNS / GPO</span>
+        <span class="stack-tag">VMware</span>
+      </div>
+    </div>
+
+    <!-- PROJET 2 -->
+    <div class="project-card">
+      <div class="project-num">02</div>
+      <div class="project-type">Gestion des Identités & Sécurité</div>
+      <h3 class="project-title">Infrastructure AD avec<br>Relation d'Approbation Forest</h3>
+      <p class="project-desc">
+        Mise en place d'une infrastructure AD complète : contrôleur de domaine DC1, serveur de fichiers SRV1,
+        poste client PC1. Création d'une structure AGDLP, gestion des permissions par dossier partagé,
+        déploiement de GPO (verrouillage session, blocage panneau de configuration, fond d'écran entreprise),
+        puis établissement d'une relation d'approbation bidirectionnelle entre deux forêts AD distinctes.
+      </p>
+      <div class="project-result">
+        <strong>Résultat :</strong> Cloisonnement des accès vérifié — les utilisateurs RH ne peuvent pas accéder
+        aux dossiers IT et vice-versa. La relation d'approbation permet aux utilisateurs cross-domaine
+        d'accéder aux ressources partagées. Audit et journalisation activés via GPO.
+      </div>
+      <div class="project-stack">
+        <span class="stack-tag">Windows Server 2022</span>
+        <span class="stack-tag">AGDLP</span>
+        <span class="stack-tag">GPO</span>
+        <span class="stack-tag">Serveur de fichiers</span>
+        <span class="stack-tag">Approbation forêt</span>
+        <span class="stack-tag">Audit / Event Viewer</span>
+        <span class="stack-tag">PowerShell</span>
+      </div>
+    </div>
+
+    <!-- PROJET 3 -->
+    <div class="project-card">
+      <div class="project-num">03</div>
+      <div class="project-type">Déploiement & Standardisation</div>
+      <h3 class="project-title">Parc Informatique<br>& Helpdesk Structuré</h3>
+      <p class="project-desc">
+        Simulation de déploiement d'un parc informatique en environnement entreprise : configuration
+        standardisée des postes, intégration au domaine AD, gestion des comptes utilisateurs multi-OS
+        (Windows, macOS, Linux). Mise en place de procédures d'onboarding/offboarding reproductibles
+        et d'une base de connaissances IT structurée.
+      </p>
+      <div class="project-result">
+        <strong>Résultat :</strong> Environnement structuré et standardisé — réduction du temps d'intégration
+        des nouveaux collaborateurs, amélioration du temps de résolution des incidents grâce à la
+        base de connaissances. Modèle applicable directement en entreprise.
+      </div>
+      <div class="project-stack">
+        <span class="stack-tag">Windows 10/11</span>
+        <span class="stack-tag">macOS</span>
+        <span class="stack-tag">Linux</span>
+        <span class="stack-tag">Active Directory</span>
+        <span class="stack-tag">Service Desk</span>
+        <span class="stack-tag">Documentation</span>
+        <span class="stack-tag">Onboarding</span>
+      </div>
+    </div>
+
+    <!-- PROJET 4 — BONUS -->
+    <div class="project-card">
+      <div class="project-num">04</div>
+      <div class="project-type">Cloud & Identités Hybrides</div>
+      <h3 class="project-title">Synchronisation AD<br>↔ Azure (Bulk & Suffixes)</h3>
+      <p class="project-desc">
+        Configuration avancée de la synchronisation hybride : ajout du suffixe UPN public dans AD local,
+        vérification DNS via enregistrement TXT sur DNSExit, création d'utilisateurs en bloc sur Azure via
+        fichier CSV, création d'un compte administrateur général Azure, connexion et configuration complète
+        d'Azure AD Connect avec authentification MFA Authenticator.
+      </p>
+      <div class="project-result">
+        <strong>Résultat :</strong> 21 utilisateurs synchronisés avec succès entre l'AD local et Microsoft Entra ID.
+        Les comptes créés en local apparaissent automatiquement dans Azure avec le bon suffixe de domaine.
+        Infrastructure hybride opérationnelle bout-en-bout.
+      </div>
+      <div class="project-stack">
+        <span class="stack-tag">Azure AD Connect</span>
+        <span class="stack-tag">UPN Suffixes</span>
+        <span class="stack-tag">DNS TXT Record</span>
+        <span class="stack-tag">Bulk Create CSV</span>
+        <span class="stack-tag">MFA Authenticator</span>
+        <span class="stack-tag">Entra ID</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- FORMATION -->
+<section id="formation">
+  <div class="section-label reveal">Formation & Autoformation</div>
+  <h2 class="section-title reveal">Mon<br>parcours</h2>
+
+  <div class="edu-block reveal">
+    <div>
+      <div class="edu-degree">Bachelor<br>Administration Systèmes,<br>Réseaux & Cybersécurité</div>
+      <div class="edu-school">Institut F2I — Bac+3</div>
+      <div style="margin-top: 16px;">
+        <span class="edu-status">En cours — 2026</span>
+      </div>
+    </div>
+    <div class="edu-extras">
+      <div class="edu-extra-item">
+        <div class="edu-extra-icon">🌐</div>
+        <div class="edu-extra-text">
+          <strong style="color:var(--text)">Cisco Networking Academy</strong><br>
+          Fondamentaux réseaux & cybersécurité
+        </div>
+      </div>
+      <div class="edu-extra-item">
+        <div class="edu-extra-icon">📚</div>
+        <div class="edu-extra-text">
+          <strong style="color:var(--text)">Formations Udemy</strong><br>
+          Administration systèmes, cloud, sécurité
+        </div>
+      </div>
+      <div class="edu-extra-item">
+        <div class="edu-extra-icon">🔍</div>
+        <div class="edu-extra-text">
+          <strong style="color:var(--text)">Veille technologique active</strong><br>
+          Systèmes, cloud Azure, cybersécurité
+        </div>
+      </div>
+      <div class="edu-extra-item">
+        <div class="edu-extra-icon">🔄</div>
+        <div class="edu-extra-text">
+          <strong style="color:var(--text)">Rythme alternance</strong><br>
+          3 semaines entreprise / 1 semaine école
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CONTACT -->
+<section id="contact" style="padding-bottom: 0;">
+  <div class="contact-block reveal">
+    <h2 class="contact-title">Travaillons<br>ensemble</h2>
+    <p class="contact-sub">
+      Disponible immédiatement pour une alternance de 12 à 24 mois en Île-de-France.<br>
+      Je suis prête à rejoindre une DSI et contribuer dès le premier jour.
+    </p>
+    <div class="contact-links">
+      <a href="mailto:mbaloufatoumata033@gmail.com" class="contact-link">
+        <span>✉</span> mbaloufatoumata033@gmail.com
+      </a>
+      <a href="tel:+33784658865" class="contact-link">
+        <span>📞</span> 07 84 65 88 65
+      </a>
+      <a href="#" class="contact-link">
+        <span>📍</span> Île-de-France
+      </a>
+    </div>
+    <div class="contact-avail">
+      <div class="avail-dot"></div>
+      Disponible immédiatement — Alternance 12 à 24 mois · Île-de-France
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 M'Balou Fatoumata Camara</span>
+  <span>Bachelor Systèmes, Réseaux & Cybersécurité — Institut F2I</span>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // Stagger children within skill grid
+  document.querySelectorAll('.skills-grid .skill-card').forEach((card, i) => {
+    card.style.transitionDelay = `${i * 60}ms`;
+  });
+
+  document.querySelectorAll('.projects-grid .project-card').forEach((card, i) => {
+    card.style.transitionDelay = `${i * 80}ms`;
+  });
+</script>
+</body>
+</html>
