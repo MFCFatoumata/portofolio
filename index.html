@@ -1,0 +1,2124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M'Balou Fatoumata Camara — IT Support & Sys Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #030508;
+  --surface: #080b12;
+  --surface2: #0d1220;
+  --border: rgba(100,180,255,0.07);
+  --border2: rgba(100,180,255,0.14);
+  --accent: #3b82f6;
+  --accent2: #06b6d4;
+  --gold: #f59e0b;
+  --green: #10b981;
+  --red: #ef4444;
+  --text: #e8edf8;
+  --muted: #4a5470;
+  --muted2: #6b7899;
+  --sans: 'Cabinet Grotesk', sans-serif;
+  --serif: 'Instrument Serif', serif;
+  --mono: 'JetBrains Mono', monospace;
+  --glow: 0 0 60px rgba(59,130,246,0.15);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ── CURSOR ── */
+.cursor {
+  position: fixed;
+  width: 10px; height: 10px;
+  background: var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%,-50%);
+  transition: width .15s, height .15s, background .15s;
+  mix-blend-mode: screen;
+}
+.cursor-ring {
+  position: fixed;
+  width: 36px; height: 36px;
+  border: 1.5px solid rgba(59,130,246,.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%,-50%);
+  transition: all .12s ease;
+}
+
+/* ── NOISE TEXTURE ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+/* Grid lines */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(59,130,246,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59,130,246,0.025) 1px, transparent 1px);
+  background-size: 72px 72px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 500;
+  padding: 0 60px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(3,5,8,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--accent);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+.nav-logo span { color: var(--muted2); }
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 36px;
+  align-items: center;
+}
+.nav-links a {
+  color: var(--muted2);
+  text-decoration: none;
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: color .2s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0;
+  width: 0; height: 1px;
+  background: var(--accent);
+  transition: width .25s;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-links a:hover::after { width: 100%; }
+
+.nav-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.btn-nav {
+  padding: 8px 18px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: all .2s;
+  cursor: pointer;
+}
+.btn-nav-cv {
+  border: 1px solid var(--border2);
+  color: var(--text);
+  background: transparent;
+}
+.btn-nav-cv:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(59,130,246,.06);
+}
+.btn-nav-contact {
+  background: var(--accent);
+  color: white;
+  border: 1px solid var(--accent);
+  font-weight: 600;
+}
+.btn-nav-contact:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(59,130,246,.4);
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 120px 60px 80px;
+  position: relative;
+  z-index: 1;
+  gap: 60px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.hero-left { display: flex; flex-direction: column; }
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 32px;
+  animation: slideUp .6s ease both;
+}
+
+.pulse-dot {
+  width: 8px; height: 8px;
+  background: var(--green);
+  border-radius: 50%;
+  position: relative;
+}
+.pulse-dot::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid var(--green);
+  animation: pulse-ring 2s ease infinite;
+}
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: .6; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+.eyebrow-text {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--green);
+}
+
+.hero-name {
+  font-family: var(--sans);
+  font-size: clamp(52px, 7vw, 88px);
+  font-weight: 900;
+  line-height: .95;
+  letter-spacing: -.03em;
+  margin-bottom: 24px;
+  animation: slideUp .6s .08s ease both;
+}
+
+.hero-name .line-serif {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--accent);
+  font-size: 1.08em;
+}
+
+.hero-role {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--accent2);
+  letter-spacing: .1em;
+  margin-bottom: 24px;
+  animation: slideUp .6s .16s ease both;
+}
+
+.hero-role::before {
+  content: '> ';
+  color: var(--muted);
+}
+
+.hero-desc {
+  font-size: 15px;
+  color: var(--muted2);
+  line-height: 1.85;
+  max-width: 520px;
+  margin-bottom: 44px;
+  animation: slideUp .6s .24s ease both;
+}
+
+.hero-desc strong { color: var(--text); font-weight: 600; }
+
+.hero-cta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 52px;
+  animation: slideUp .6s .32s ease both;
+}
+
+.btn-primary {
+  padding: 14px 28px;
+  background: var(--accent);
+  color: white;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all .2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 0 30px rgba(59,130,246,.3);
+}
+.btn-primary:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(59,130,246,.5);
+}
+
+.btn-outline {
+  padding: 14px 28px;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  transition: all .2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-outline:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(59,130,246,.06);
+}
+
+.hero-socials {
+  display: flex;
+  gap: 16px;
+  animation: slideUp .6s .4s ease both;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .1em;
+  color: var(--muted2);
+  text-decoration: none;
+  transition: color .2s;
+}
+.social-link:hover { color: var(--accent); }
+
+.social-link svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+/* ── HERO RIGHT — FLOATING CARD ── */
+.hero-right {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: slideUp .8s .2s ease both;
+}
+
+.card-scene {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+}
+
+.id-card {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  padding: 36px;
+  position: relative;
+  overflow: hidden;
+  animation: float 6s ease-in-out infinite;
+  box-shadow: 0 40px 80px rgba(0,0,0,.5), 0 0 60px rgba(59,130,246,.08);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  33% { transform: translateY(-10px) rotate(.5deg); }
+  66% { transform: translateY(-5px) rotate(-.3deg); }
+}
+
+.id-card::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(59,130,246,.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.id-card::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: -60px;
+  width: 180px; height: 180px;
+  background: radial-gradient(circle, rgba(6,182,212,.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.card-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: rgba(59,130,246,.08);
+  border: 1px solid rgba(59,130,246,.2);
+  padding: 5px 12px;
+  border-radius: 20px;
+}
+
+.card-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: blink 2s ease infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+
+.card-id-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.card-avatar {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1e3a5f, #0c2340);
+  border: 2px solid rgba(59,130,246,.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin-bottom: 16px;
+}
+
+.card-name {
+  font-family: var(--sans);
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 4px;
+  line-height: 1.2;
+}
+
+.card-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--accent2);
+  letter-spacing: .08em;
+  margin-bottom: 24px;
+}
+
+.card-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.metric {
+  background: rgba(255,255,255,.025);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+  text-align: center;
+}
+
+.metric-value {
+  font-family: var(--sans);
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.metric-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .12em;
+  color: var(--muted2);
+  text-transform: uppercase;
+}
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.card-tag {
+  padding: 4px 10px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted2);
+  letter-spacing: .05em;
+  transition: all .2s;
+}
+.card-tag:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Floating badges */
+.badge-float {
+  position: absolute;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0,0,0,.4);
+  white-space: nowrap;
+}
+
+.badge-float-1 {
+  top: -20px; right: -30px;
+  animation: float-badge1 4s ease-in-out infinite;
+}
+.badge-float-2 {
+  bottom: 20px; left: -40px;
+  animation: float-badge2 5s ease-in-out infinite;
+  background: var(--surface2);
+  border: 1px solid rgba(16,185,129,.4);
+  box-shadow: 0 10px 30px rgba(0,0,0,.6), 0 0 20px rgba(16,185,129,.1);
+}
+.badge-float .bf-val {
+  font-weight: 700;
+  color: var(--green);
+  margin-right: 6px;
+}
+
+@keyframes float-badge1 {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes float-badge2 {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── STATS BAR ── */
+.stats-bar {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--border2);
+  border-bottom: 1px solid var(--border2);
+  background: var(--surface2);
+  overflow: hidden;
+}
+
+.stats-bar-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 60px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.stat-item {
+  padding: 40px 40px;
+  border-right: 1px solid var(--border);
+  position: relative;
+  transition: background .25s;
+}
+.stat-item:last-child { border-right: none; }
+.stat-item:hover { background: var(--surface2); }
+
+.stat-num {
+  font-family: var(--sans);
+  font-size: 44px;
+  font-weight: 900;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 8px;
+  letter-spacing: -.02em;
+}
+
+.stat-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text);
+  line-height: 1.6;
+  opacity: 0.75;
+}
+
+/* ── SECTIONS ── */
+.section {
+  position: relative;
+  z-index: 1;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 100px 60px;
+}
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.section-label::before {
+  content: '';
+  width: 40px; height: 1px;
+  background: var(--accent);
+  opacity: .4;
+}
+
+.section-title {
+  font-family: var(--sans);
+  font-size: clamp(36px, 5vw, 58px);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -.03em;
+  margin-bottom: 64px;
+}
+
+.section-title em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+}
+
+hr.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 0 60px;
+}
+
+/* ── ABOUT ── */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 3px;
+  background: var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.about-text {
+  background: var(--surface);
+  padding: 52px;
+}
+
+.about-text p {
+  color: var(--muted2);
+  font-size: 15px;
+  line-height: 1.9;
+  margin-bottom: 16px;
+}
+
+.about-text p:last-child { margin-bottom: 0; }
+.about-text strong { color: var(--text); font-weight: 600; }
+
+.about-highlights {
+  background: var(--surface);
+  padding: 52px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hl-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(255,255,255,.015);
+  transition: all .2s;
+  cursor: default;
+}
+
+.hl-item:hover {
+  border-color: rgba(59,130,246,.25);
+  background: rgba(59,130,246,.04);
+  transform: translateX(4px);
+}
+
+.hl-icon {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  background: rgba(59,130,246,.08);
+  border: 1px solid rgba(59,130,246,.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.hl-text strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.hl-text span {
+  font-size: 12px;
+  color: var(--muted2);
+  line-height: 1.5;
+}
+
+/* ── SKILLS ── */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+  background: var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.skill-card {
+  background: var(--surface);
+  padding: 36px;
+  position: relative;
+  overflow: hidden;
+  transition: background .25s;
+  cursor: default;
+}
+
+.skill-card:hover { background: var(--surface2); }
+
+.skill-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.skill-cat-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.skill-icon {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.skill-name {
+  font-family: var(--sans);
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 18px;
+  line-height: 1.3;
+  letter-spacing: -.01em;
+}
+
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.tag {
+  padding: 3px 10px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted2);
+  transition: all .2s;
+}
+
+.tag:hover {
+  border-color: rgba(59,130,246,.3);
+  color: var(--accent);
+}
+
+/* color variants */
+.sk-blue .skill-cat-label { color: var(--accent); }
+.sk-blue .skill-icon { background: rgba(59,130,246,.08); }
+.sk-cyan .skill-cat-label { color: var(--accent2); }
+.sk-cyan .skill-icon { background: rgba(6,182,212,.08); }
+.sk-green .skill-cat-label { color: var(--green); }
+.sk-green .skill-icon { background: rgba(16,185,129,.08); }
+.sk-gold .skill-cat-label { color: var(--gold); }
+.sk-gold .skill-icon { background: rgba(245,158,11,.08); }
+
+/* ── EXPERIENCE ── */
+.exp-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.exp-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 48px;
+  position: relative;
+  overflow: hidden;
+  transition: all .25s;
+}
+
+.exp-card:hover {
+  border-color: rgba(59,130,246,.2);
+  background: var(--surface2);
+}
+
+.exp-card-accent {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--accent), var(--accent2));
+  opacity: 0;
+  transition: opacity .25s;
+}
+.exp-card:hover .exp-card-accent { opacity: 1; }
+
+.exp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 28px;
+  gap: 24px;
+}
+
+.exp-role {
+  font-family: var(--sans);
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  margin-bottom: 6px;
+}
+
+.exp-company {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--accent);
+  letter-spacing: .06em;
+}
+
+.exp-badge {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted2);
+  background: rgba(255,255,255,.04);
+  border: 1px solid var(--border);
+  padding: 6px 14px;
+  border-radius: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.exp-items {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.exp-items li {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  font-size: 13.5px;
+  color: var(--muted2);
+  line-height: 1.7;
+}
+
+.exp-items li::before {
+  content: '▸';
+  color: var(--accent);
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.exp-items li strong { color: var(--text); }
+
+.kpi-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(16,185,129,.08);
+  border: 1px solid rgba(16,185,129,.2);
+  color: var(--green);
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  letter-spacing: .06em;
+  margin-left: 8px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+/* ── PROJECTS ── */
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px;
+  background: var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.project-card {
+  background: var(--surface);
+  padding: 48px;
+  position: relative;
+  overflow: hidden;
+  transition: all .25s;
+}
+
+.project-card:hover {
+  background: var(--surface2);
+}
+
+.project-num {
+  font-family: var(--sans);
+  font-size: 88px;
+  font-weight: 900;
+  color: rgba(255,255,255,.03);
+  position: absolute;
+  top: 16px; right: 24px;
+  line-height: 1;
+  letter-spacing: -.04em;
+  transition: color .3s;
+  pointer-events: none;
+}
+.project-card:hover .project-num { color: rgba(59,130,246,.05); }
+
+.project-type {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: var(--accent2);
+  margin-bottom: 14px;
+  font-weight: 500;
+}
+
+.project-title {
+  font-family: var(--sans);
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  margin-bottom: 14px;
+  line-height: 1.2;
+}
+
+.project-desc {
+  color: var(--muted2);
+  font-size: 13px;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.project-checklist {
+  list-style: none;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.project-checklist li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 12.5px;
+  color: var(--muted2);
+  line-height: 1.6;
+}
+
+.project-checklist li::before {
+  content: '✓';
+  color: var(--green);
+  flex-shrink: 0;
+  font-weight: 700;
+  margin-top: 1px;
+}
+
+.project-result {
+  padding: 14px 18px;
+  background: rgba(59,130,246,.04);
+  border-left: 2px solid var(--accent);
+  border-radius: 0 6px 6px 0;
+  font-size: 12.5px;
+  color: var(--text);
+  line-height: 1.7;
+  margin-bottom: 22px;
+}
+
+.project-result strong { color: var(--accent); }
+
+.project-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.project-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex: 1;
+}
+
+.stack-tag {
+  padding: 3px 9px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .06em;
+  color: var(--muted);
+  text-transform: uppercase;
+  background: rgba(255,255,255,.02);
+}
+
+.project-dl-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted2);
+  text-decoration: none;
+  transition: all .2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.project-dl-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(59,130,246,.06);
+}
+
+.project-dl-btn svg {
+  width: 14px; height: 14px;
+}
+
+/* alias used in some project cards */
+.project-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted2);
+  text-decoration: none;
+  transition: all .2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.project-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(59,130,246,.06);
+}
+
+/* ── FORMATION ── */
+.edu-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px;
+  background: var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.edu-main {
+  background: var(--surface);
+  padding: 52px;
+}
+
+.edu-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(59,130,246,.08);
+  border: 1px solid rgba(59,130,246,.2);
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 30px;
+}
+
+.edu-degree {
+  font-family: var(--sans);
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -.02em;
+  margin-bottom: 14px;
+}
+
+.edu-school {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--accent);
+  letter-spacing: .06em;
+  margin-bottom: 6px;
+}
+
+
+.edu-info {
+  font-size: 13px;
+  color: var(--muted2);
+  margin-bottom: 24px;
+}
+
+.edu-pill {
+  display: inline-block;
+  background: rgba(16,185,129,.08);
+  border: 1px solid rgba(16,185,129,.25);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--green);
+}
+
+.edu-extras {
+  background: var(--surface);
+  padding: 52px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.edu-item {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 14px 18px;
+  background: rgba(255,255,255,.02);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition: all .2s;
+}
+
+.edu-item:hover {
+  border-color: rgba(59,130,246,.2);
+  transform: translateX(4px);
+}
+
+.edu-icon {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  background: rgba(59,130,246,.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.edu-txt strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 1px;
+}
+
+.edu-txt span {
+  font-size: 12px;
+  color: var(--muted2);
+}
+
+/* ── CONTACT ── */
+.contact-section {
+  position: relative;
+  z-index: 1;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 100px 60px;
+}
+
+.contact-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 80px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 100%, rgba(59,130,246,.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.contact-card::after {
+  content: '';
+  position: absolute;
+  top: -1px; left: 30%; right: 30%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+.contact-title {
+  font-family: var(--sans);
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 900;
+  letter-spacing: -.03em;
+  line-height: 1;
+  margin-bottom: 20px;
+}
+
+.contact-title em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+}
+
+.contact-sub {
+  color: var(--muted2);
+  font-size: 15px;
+  max-width: 500px;
+  margin: 0 auto 48px;
+  line-height: 1.8;
+}
+
+.contact-sub strong { color: var(--text); }
+
+.contact-links {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 13px 24px;
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all .2s;
+}
+
+.contact-link:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(59,130,246,.06);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(59,130,246,.15);
+}
+
+.contact-link svg {
+  width: 18px; height: 18px;
+  fill: currentColor;
+}
+
+.avail-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .1em;
+  color: var(--muted2);
+}
+
+.avail-dot {
+  width: 8px; height: 8px;
+  background: var(--green);
+  border-radius: 50%;
+  animation: blink 2s ease infinite;
+}
+
+/* ── FOOTER ── */
+footer {
+  position: relative;
+  z-index: 1;
+  padding: 28px 60px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+footer span {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: .08em;
+}
+
+/* ── REVEAL ANIMATIONS ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── MOBILE HAMBURGER ── */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.nav-hamburger span {
+  width: 24px; height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: all .2s;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+  .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; }
+  .hero-right { display: none; }
+  .stats-bar-inner { padding: 0 24px; grid-template-columns: 1fr 1fr; }
+  .stat-item { padding: 24px 20px; }
+  .section { padding: 72px 24px; }
+  hr.divider { margin: 0 24px; }
+  .about-grid, .edu-grid { grid-template-columns: 1fr; }
+  .skills-grid { grid-template-columns: 1fr 1fr; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .exp-header { flex-direction: column; }
+  .contact-card { padding: 48px 24px; }
+  footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
+  .nav-actions .btn-nav-cv { display: none; }
+}
+
+@media (max-width: 640px) {
+  .skills-grid { grid-template-columns: 1fr; }
+  .stats-bar-inner { grid-template-columns: 1fr 1fr; }
+  .hero-name { font-size: 52px; }
+  .contact-links { flex-direction: column; align-items: center; }
+}
+
+/* ── SCROLL PROGRESS ── */
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  z-index: 1000;
+  transition: width .05s;
+  box-shadow: 0 0 10px rgba(59,130,246,.5);
+}
+</style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- Scroll progress -->
+<div class="scroll-progress" id="scroll-progress"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">MFC <span>// Portfolio</span></div>
+  <ul class="nav-links">
+    <li><a href="#apropos">À propos</a></li>
+    <li><a href="#competences">Compétences</a></li>
+    <li><a href="#experience">Expérience</a></li>
+    <li><a href="#projets">Projets</a></li>
+    <li><a href="#formation">Formation</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="https://docs.google.com/gview?embedded=true&url=https://github.com/MFCFatoumata/CV/blob/main/Fatoumata_CV_TechnicienSupport_Alternance.pdf?raw=true" target="_blank" class="btn-nav btn-nav-cv"> Voir CV</a>
+    <a href="https://raw.githubusercontent.com/MFCFatoumata/CV/main/Fatoumata_CV_TechnicienSupport_Alternance.pdf" download="CV_Fatoumata_Camara.pdf" class="btn-nav btn-nav-cv">⬇ CV</a>
+    <a href="#contact" class="btn-nav btn-nav-contact">Collaborons →</a>
+  </div>
+  <div class="nav-hamburger" onclick="this.classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">
+      <div class="pulse-dot"></div>
+      <span class="eyebrow-text">Disponible immédiatement — Alternance Île-de-France</span>
+    </div>
+
+    <h1 class="hero-name">
+      M'Balou<br>
+      <span class="line-serif">Fatoumata</span><br>
+      Camara
+    </h1>
+
+    <p class="hero-role">IT Support · Sysadmin · Azure / Active Directory</p>
+
+    <p class="hero-desc">
+      Technicienne Support IT et Administratrice Systèmes & Réseaux, spécialisée en <strong>Windows Server</strong>, <strong>Active Directory</strong> et <strong>gestion des identités hybrides Azure / Entra ID</strong>. Je déploie, sécurise et documente des infrastructures IT avec des résultats mesurables — dès le premier jour.
+    </p>
+
+    <div class="hero-cta">
+      <a href="#contact" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 012 1.18 2 2 0 014 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+        Me recruter
+      </a>
+      <a href="https://docs.google.com/gview?embedded=true&url=https://github.com/MFCFatoumata/CV/blob/main/Fatoumata_CV_TechnicienSupport_Alternance.pdf?raw=true" target="_blank" class="btn-outline">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"/><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/></svg>
+        Voir mon CV
+      </a>
+    </div>
+
+    <div class="hero-socials">
+      <a href="https://www.linkedin.com/in/mbaloufatoumata/" target="_blank" class="social-link">
+        <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
+      <a href="mailto:mbaloufatoumata033@gmail.com" class="social-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Email
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="card-scene">
+      <!-- Floating badges -->
+      <div class="badge-float badge-float-1">
+        <span class="bf-val">90%</span> Résolution N1 autonomie
+      </div>
+      <div class="badge-float badge-float-2">
+        <span class="bf-val">✓ 0</span> incident · <strong style="color:var(--text)">15 postes</strong> déployés
+      </div>
+
+      <!-- ID Card -->
+      <div class="id-card">
+        <div class="card-header">
+          <div class="card-chip">
+            <div class="card-dot"></div>
+            IT Technicienne
+          </div>
+          <div class="card-id-num">MFC · 2026</div>
+        </div>
+
+        <div class="card-avatar">👩🏾‍💻</div>
+
+        <div class="card-name">M'Balou F. Camara</div>
+        <div class="card-title">Support IT · Sysadmin · Azure</div>
+
+        <div class="card-metrics">
+          <div class="metric">
+            <div class="metric-value">90%</div>
+            <div class="metric-label">Résolution N1</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">40</div>
+            <div class="metric-label">Tickets / mois</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">+50</div>
+            <div class="metric-label">Équipements</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">−30%</div>
+            <div class="metric-label">Temps résolution</div>
+          </div>
+        </div>
+
+        <div class="card-tags">
+          <div class="card-tag">Active Directory</div>
+          <div class="card-tag">Azure Entra ID</div>
+          <div class="card-tag">Windows Server</div>
+          <div class="card-tag">GPO</div>
+          <div class="card-tag">MFA / SSO</div>
+          <div class="card-tag">Réseaux</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ STATS BAR ═══ -->
+<div class="stats-bar">
+  <div class="stats-bar-inner">
+    <div class="stat-item">
+      <div class="stat-num">90%</div>
+      <div class="stat-label">Résolution N1<br>en pleine autonomie</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">40</div>
+      <div class="stat-label">Tickets traités<br>par mois</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">+50</div>
+      <div class="stat-label">Équipements<br>gérés et suivis</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">−30%</div>
+      <div class="stat-label">Temps de résolution<br>des incidents</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ À PROPOS ═══ -->
+<section id="apropos" class="section">
+  <div class="section-label reveal">À propos</div>
+  <h2 class="section-title reveal">Pourquoi me <em>recruter</em> ?</h2>
+  <div class="about-grid reveal">
+    <div class="about-text">
+      <p>Je suis <strong>M'Balou Fatoumata Camara</strong>, technicienne Support IT et future administratrice Systèmes & Réseaux — actuellement en Bachelor Bac+3 en alternance, spécialisée en infrastructure IT et gestion des identités hybrides.</p>
+      <p>En <strong>Entreprise</strong>, j'ai déployé 15 postes sans incident, traité 40 tickets/mois avec 90 % de résolution autonome en niveau 1, et réduit le temps d'intervention de 30 % grâce à des procédures que j'ai rédigées moi-même.</p>
+      <p>Sur le plan technique, j'ai construit de A à Z une infrastructure <strong>Active Directory complète</strong>, une synchronisation hybride AD Microsoft Entra ID, et administré un parc de <strong>+50 équipements</strong>. Tout est documenté et validé.</p>
+      <p style="color:var(--text);margin-top:20px">Ce qui me définit : <strong>rigueur technique</strong>, <strong>sens du service</strong>, et la capacité à documenter mon travail de façon professionnelle. Je ne cherche pas un poste — je cherche une équipe à qui apporter une valeur immédiate.</p>
+    </div>
+    <div class="about-highlights">
+      <div class="hl-item">
+        <div class="hl-icon">📍</div>
+        <div class="hl-text">
+          <strong>Mobilité Île-de-France</strong>
+          <span>Disponible immédiatement · 12 à 24 mois en alternance</span>
+        </div>
+      </div>
+      <div class="hl-item">
+        <div class="hl-icon">🎓</div>
+        <div class="hl-text">
+          <strong>Bachelor Bac+3 — Titre RNCP</strong>
+          <span>Administration Systèmes, Réseaux & Cybersécurité</span>
+        </div>
+      </div>
+      <div class="hl-item">
+        <div class="hl-icon">💬</div>
+        <div class="hl-text">
+          <strong>Langues</strong>
+          <span>Français courant · Anglais professionnel (support IT & documentation technique)</span>
+        </div>
+      </div>
+      <div class="hl-item">
+        <div class="hl-icon">🔍</div>
+        <div class="hl-text">
+          <strong>Veille & autoformation active</strong>
+          <span>Cisco NetAcad · Udemy · Veille technologique continue</span>
+        </div>
+      </div>
+      <div class="hl-item">
+        <div class="hl-icon">⚡</div>
+        <div class="hl-text">
+          <strong>Opérationnelle dès le premier jour</strong>
+          <span>Projets réels documentés · Environnements lab identiques au terrain</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══ COMPÉTENCES ═══ -->
+<section id="competences" class="section">
+  <div class="section-label reveal">Compétences Techniques</div>
+  <h2 class="section-title reveal">Ce que<br>je <em>maîtrise</em></h2>
+  <div class="skills-grid reveal">
+
+    <div class="skill-card sk-blue">
+      <div class="skill-card-top">
+        <span class="skill-cat-label">Systèmes & Cloud</span>
+        <div class="skill-icon">🖥️</div>
+      </div>
+      <div class="skill-name">Windows Server &amp;<br>Microsoft Azure</div>
+      <div class="tags">
+        <span class="tag">Active Directory</span><span class="tag">GPO</span>
+        <span class="tag">DNS</span><span class="tag">DHCP</span>
+        <span class="tag">Microsoft Entra ID</span><span class="tag">Azure AD Connect</span>
+        <span class="tag">SSO</span><span class="tag">MFA</span>
+        <span class="tag">Conditional Access</span>
+      </div>
+    </div>
+
+    <div class="skill-card sk-cyan">
+      <div class="skill-card-top">
+        <span class="skill-cat-label">Réseaux & Sécurité</span>
+        <div class="skill-icon">🌐</div>
+      </div>
+      <div class="skill-name">Infrastructure<br>Réseau</div>
+      <div class="tags">
+        <span class="tag">TCP/IP</span><span class="tag">VLAN</span>
+        <span class="tag">VPN</span><span class="tag">Pare-feu</span>
+        <span class="tag">Cybersécurité</span><span class="tag">Cisco NetAcad</span>
+        <span class="tag">Gestion des accès</span>
+      </div>
+    </div>
+
+    <div class="skill-card sk-green">
+      <div class="skill-card-top">
+        <span class="skill-cat-label">Support & Service Desk</span>
+        <div class="skill-icon">🎧</div>
+      </div>
+      <div class="skill-name">Support IT<br>Niveaux 1 & 2</div>
+      <div class="tags">
+        <span class="tag">Ticketing</span><span class="tag">Onboarding</span>
+        <span class="tag">Offboarding</span><span class="tag">Diagnostic incidents</span>
+        <span class="tag">Support présentiel</span><span class="tag">Support distant</span>
+        <span class="tag">Base de connaissances</span>
+      </div>
+    </div>
+
+    <div class="skill-card sk-gold">
+      <div class="skill-card-top">
+        <span class="skill-cat-label">Gestion Parc & Documentation</span>
+        <div class="skill-icon">🗂️</div>
+      </div>
+      <div class="skill-name">Parc Informatique<br>& Procédures</div>
+      <div class="tags">
+        <span class="tag">Windows 10/11</span><span class="tag">macOS</span>
+        <span class="tag">Linux Ubuntu/Debian</span><span class="tag">Inventaire parc</span>
+        <span class="tag">Déploiement postes</span><span class="tag">Rédaction procédures</span>
+      </div>
+    </div>
+
+    <div class="skill-card sk-blue">
+      <div class="skill-card-top">
+        <span class="skill-cat-label">Identités & Administration</span>
+        <div class="skill-icon">🔐</div>
+      </div>
+      <div class="skill-name">Gestion des<br>Identités Hybrides</div>
+      <div class="tags">
+        <span class="tag">AGDLP</span><span class="tag">OU / Groupes AD</span>
+        <span class="tag">Approbation forêt</span><span class="tag">UPN Suffixes</span>
+        <span class="tag">Sync AD ↔ Azure</span><span class="tag">Event Viewer</span>
+        <span class="tag">PowerShell</span>
+      </div>
+    </div>
+
+    <div class="skill-card sk-cyan">
+      <div class="skill-card-top">
+        <span class="skill-cat-label">Outils & Environnements</span>
+        <div class="skill-icon">🛠️</div>
+      </div>
+      <div class="skill-name">Outils<br>Professionnels</div>
+      <div class="tags">
+        <span class="tag">VMware</span><span class="tag">Microsoft 365</span>
+        <span class="tag">Office 365</span>
+        <span class="tag">Outils collaboratifs</span><span class="tag">Documentation IT</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══ EXPÉRIENCE ═══ -->
+<section id="experience" class="section">
+  <div class="section-label reveal">Expériences Professionnelles</div>
+  <h2 class="section-title reveal">Ce que j'ai<br><em>accompli</em></h2>
+  <div class="exp-list">
+
+    <div class="exp-card reveal">
+      <div class="exp-card-accent"></div>
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">Technicienne Support Informatique</div>
+          <div class="exp-company">DIGIVOLUTION — Paris, France</div>
+        </div>
+        <div class="exp-badge">Avr. 2025 — Août 2025</div>
+      </div>
+      <ul class="exp-items">
+        <li>Déployé et configuré <strong>15 postes utilisateurs</strong> (Windows, macOS, Linux) avec intégration AD / Entra ID — mise en production <strong>sans aucun incident</strong><span class="kpi-badge">✓ 0 incident</span></li>
+        <li>Traité <strong>40 tickets/mois</strong> avec un taux de résolution de <strong>90 % en niveau 1</strong> en totale autonomie<span class="kpi-badge">90 % N1</span></li>
+        <li>Réduit le temps moyen de résolution des incidents de <strong>20 à 30 %</strong> grâce à des procédures standardisées et guides utilisateurs<span class="kpi-badge">−30 % résolution</span></li>
+        <li>Administré un parc de <strong>+50 équipements</strong> — amélioration du suivi et de la disponibilité matérielle<span class="kpi-badge">+50 équipements</span></li>
+        <li>Fiabilisé la gestion des accès (comptes, droits, onboarding/offboarding) en réduisant les erreurs d'attribution</li>
+      </ul>
+    </div>
+
+    <div class="exp-card reveal">
+      <div class="exp-card-accent"></div>
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">Technicienne Support IT</div>
+          <div class="exp-company">URMVI — Guinée</div>
+        </div>
+        <div class="exp-badge">Fév. 2024 — Juil. 2024</div>
+      </div>
+      <ul class="exp-items">
+        <li>Configuré et déployé plusieurs postes utilisateurs en environnement professionnel</li>
+        <li>Résolu des incidents utilisateurs, contribuant à l'amélioration de la <strong>continuité de service IT</strong></li>
+        <li>Géré les comptes et droits d'accès, limitant les problèmes de connexion utilisateurs</li>
+        <li>Structuré la <strong>documentation IT</strong> avec réduction des demandes répétitives au support</li>
+        <li>Optimisé la gestion du stock matériel avec une meilleure visibilité du parc</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══ PROJETS ═══ -->
+<section id="projets" class="section">
+  <div class="section-label reveal">Projets Techniques — 2026</div>
+  <h2 class="section-title reveal">Ce que<br>j'ai <em>construit</em></h2>
+  <div class="projects-grid reveal">
+
+    <!-- Projet 01 -->
+    <div class="project-card">
+      <div class="project-num">01</div>
+      <div class="project-type">Infrastructure Active Directory</div>
+      <h3 class="project-title">Déploiement Active Directory &amp; Services Réseau</h3>
+      <p class="project-desc">Conception et déploiement complet d'un environnement Windows Server avec gestion centralisée des utilisateurs, ressources et droits d'accès.</p>
+      <ul class="project-checklist">
+        <li>Installation Windows Server 2022, configuration IP fixe, promotion en contrôleur de domaine</li>
+        <li>Structure OU (RH, IT, Finance, Commercial) avec méthode AGDLP</li>
+        <li>GPO : verrouillage session, blocage panneau de config, fond d'écran entreprise</li>
+        <li>Serveur de fichiers avec dossiers partagés cloisonnés par groupe</li>
+        <li>Intégration poste client Windows 10 au domaine, tests de permissions validés</li>
+        <li>Audit et journalisation activés (Event Viewer — Account Logon & Management)</li>
+      </ul>
+      <div class="project-result"><strong>Résultat :</strong> Accès cloisonnés validés — RH ne peut pas accéder aux dossiers IT et inversement. GPO appliquées. Audit actif sur le contrôleur de domaine.</div>
+      <div class="project-footer">
+        <div class="project-stack">
+          <span class="stack-tag">Windows Server 2022</span><span class="stack-tag">Active Directory</span>
+          <span class="stack-tag">GPO</span><span class="stack-tag">AGDLP</span>
+          <span class="stack-tag">DNS</span><span class="stack-tag">PowerShell</span><span class="stack-tag">VMware</span>
+        </div>
+        <a href="https://docs.google.com/gview?embedded=true&url=https://raw.githubusercontent.com/MFCFatoumata/D-ploiement-AD/main/InfrastructureActiveDirectory_services_r%C3%A9seau_MBalouFatoumataCamara.pdf"
+           target="_blank" class="project-dl-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/></svg>
+          Voir la documentation
+        </a>
+      </div>
+    </div>
+
+    <!-- Projet 02 -->
+    <div class="project-card">
+      <div class="project-num">02</div>
+      <div class="project-type">Cloud & Identités Hybrides</div>
+      <h3 class="project-title">Synchronisation AD ↔ Microsoft Entra ID (Azure)</h3>
+      <p class="project-desc">Mise en place d'une infrastructure hybride complète — unification des identités on-premise et cloud avec authentification sécurisée.</p>
+      <ul class="project-checklist">
+        <li>Ajout du suffixe UPN public dans l'AD local et vérification DNS (enregistrement TXT)</li>
+        <li>Création d'utilisateurs en masse via fichier CSV (Bulk Create Azure)</li>
+        <li>Installation et configuration d'Azure AD Connect sur le contrôleur de domaine</li>
+        <li>Mise en place MFA (Microsoft Authenticator), SSO et Conditional Access</li>
+        <li>Synchronisation réussie : 21 utilisateurs locaux visibles dans Entra ID</li>
+      </ul>
+      <div class="project-result"><strong>Résultat :</strong> 21 utilisateurs synchronisés avec succès. Les comptes créés localement apparaissent automatiquement dans Azure avec le bon suffixe de domaine.</div>
+      <div class="project-footer">
+        <div class="project-stack">
+          <span class="stack-tag">Azure AD Connect</span><span class="stack-tag">Entra ID</span>
+          <span class="stack-tag">MFA</span><span class="stack-tag">SSO</span>
+          <span class="stack-tag">UPN Suffixes</span><span class="stack-tag">DNS TXT</span><span class="stack-tag">Bulk CSV</span>
+        </div>
+        <a href="https://docs.google.com/gview?embedded=true&url=https://github.com/MFCFatoumata/Synchronisation-AD-Azure/blob/main/synchronisation%20entre%20AD%20et%20Azure_MBalouFatoumataCamara.pdf?raw=true"
+           target="_blank" class="project-dl-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/></svg>
+          Voir la documentation
+        </a>
+      </div>
+    </div>
+
+    <!-- Projet 03 -->
+    <div class="project-card">
+      <div class="project-num">03</div>
+      <div class="project-type">Sécurité & Administration</div>
+      <h3 class="project-title">Relation d'Approbation Bidirectionnelle entre Forêts AD</h3>
+      <p class="project-desc">Communication sécurisée entre deux domaines AD distincts pour permettre l'accès croisé aux ressources partagées — bidirectionnel et validé.</p>
+      <ul class="project-checklist">
+        <li>Déploiement d'un second contrôleur de domaine SRV2 (fatoumata.local)</li>
+        <li>Configuration d'une approbation bidirectionnelle de type Forêt</li>
+        <li>Création du groupe IT APPROBATION avec membres cross-domaine (GG_IT + utilisateurs)</li>
+        <li>Partage de dossiers avec permissions cross-domaine et tests d'accès validés</li>
+        <li>Test réel : sarah.dupont (entreprise.local) accède aux ressources de fatoumata.local ✓</li>
+      </ul>
+      <div class="project-result"><strong>Résultat :</strong> Relation d'approbation bidirectionnelle fonctionnelle. Accès cross-domaine validé en conditions réelles.</div>
+      <div class="project-footer">
+        <div class="project-stack">
+          <span class="stack-tag">Windows Server 2022</span><span class="stack-tag">Forest Trust</span>
+          <span class="stack-tag">Active Directory</span><span class="stack-tag">Permissions</span>
+          <span class="stack-tag">Sécurité AD</span>
+        </div>
+        <a href="https://docs.google.com/gview?embedded=true&url=https://github.com/MFCFatoumata/D-ploiement-AD/blob/main/InfrastructureActiveDirectory_services_r%C3%A9seau_MBalouFatoumataCamara.pdf?raw=true"
+           target="_blank" class="project-dl-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/></svg>
+          Voir la documentation
+        </a>
+      </div>
+    </div>
+
+    <!-- Projet 04 -->
+    <div class="project-card">
+      <div class="project-num">04</div>
+      <div class="project-type">Support & Gestion de Parc</div>
+      <h3 class="project-title">Helpdesk Structuré &amp; Parc Informatique</h3>
+      <p class="project-desc">Déploiement d'un environnement IT complet en simulation entreprise — de la gestion des tickets à la standardisation des processus d'intégration.</p>
+      <ul class="project-checklist">
+        <li>Configuration et déploiement de postes multi-OS (Windows, macOS, Linux)</li>
+        <li>Intégration au domaine Active Directory avec gestion des comptes utilisateurs</li>
+        <li>Procédures standardisées d'onboarding/offboarding reproductibles</li>
+        <li>Base de connaissances IT structurée et alimentée</li>
+        <li>Priorisation et suivi des tickets — réduction des incidents répétitifs</li>
+      </ul>
+      <div class="project-result"><strong>Résultat :</strong> Réduction du temps d'intégration des collaborateurs. Base de connaissances opérationnelle. Processus documentés et directement applicables en entreprise.</div>
+      <div class="project-footer">
+        <div class="project-stack">
+          <span class="stack-tag">Windows 10/11</span><span class="stack-tag">macOS</span>
+          <span class="stack-tag">Linux</span><span class="stack-tag">Active Directory</span>
+          <span class="stack-tag">Service Desk</span><span class="stack-tag">Documentation</span>
+        </div>
+        <a href="#" class="project-dl-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/></svg>
+          Voir la documentation
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══ FORMATION ═══ -->
+<section id="formation" class="section">
+  <div class="section-label reveal">Formation & Certifications</div>
+  <h2 class="section-title reveal">Ma<br><em>formation</em></h2>
+  <div class="edu-grid reveal">
+    <div class="edu-main">
+      <div class="edu-badge">
+        <div class="card-dot"></div>
+        En cours
+      </div>
+      <div class="edu-degree">Bachelor Administration<br>Systèmes, Réseaux<br>&amp; Cybersécurité</div>
+      <div class="edu-school">Institut F2I</div>
+      <div class="edu-info">Titre RNCP — Bac+3</div>
+      <span class="edu-pill">Alternance active</span>
+    </div>
+    <div class="edu-extras">
+      <div class="edu-item">
+        <div class="edu-icon">🌐</div>
+        <div class="edu-txt">
+          <strong>Cisco Networking Academy</strong>
+          <span>Réseaux & Cybersécurité — fondamentaux validés</span>
+        </div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-icon">📚</div>
+        <div class="edu-txt">
+          <strong>Formations Udemy</strong>
+          <span>Administration systèmes, cloud Azure, sécurité IT</span>
+        </div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-icon">🔍</div>
+        <div class="edu-txt">
+          <strong>Veille technologique active</strong>
+          <span>Cloud, cybersécurité, systèmes — mise à jour continue</span>
+        </div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-icon">💬</div>
+        <div class="edu-txt">
+          <strong>Anglais professionnel</strong>
+          <span>Support IT et documentation technique</span>
+        </div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-icon">🔄</div>
+        <div class="edu-txt">
+          <strong>Rythme d'alternance</strong>
+          <span>3 semaines entreprise / 1 semaine école</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══ CV DOWNLOAD ═══ -->
+<section id="cv" class="section" style="padding-top:60px; padding-bottom:60px;">
+  <div style="background:var(--surface);border:1px solid var(--border2);border-radius:16px;padding:48px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;" class="reveal">
+    <div>
+      <div class="section-label" style="margin-bottom:12px;">Mon CV</div>
+      <h3 style="font-size:26px;font-weight:900;letter-spacing:-.02em;margin-bottom:8px;">Consultez mon CV complet</h3>
+      <p style="color:var(--muted2);font-size:13px;">Format PDF · Mis à jour en 2026 · Disponible immédiatement</p>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;flex-shrink:0;">
+      <a href="https://docs.google.com/gview?embedded=true&url=https://github.com/MFCFatoumata/CV/blob/main/Fatoumata_CV_TechnicienSupport_Alternance.pdf?raw=true" target="_blank" class="btn-outline">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"/><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/></svg>
+        👁 Voir mon CV
+      </a>
+      <a href="https://raw.githubusercontent.com/MFCFatoumata/CV/main/Fatoumata_CV_TechnicienSupport_Alternance.pdf" download="CV_Fatoumata_Camara.pdf" class="btn-primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        ⬇ Télécharger mon CV
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACT ═══ -->
+<section id="contact" class="contact-section">
+  <div class="contact-card reveal">
+    <h2 class="contact-title">Travaillons<br><em>ensemble</em></h2>
+    <p class="contact-sub">
+      Disponible <strong>immédiatement</strong> pour une alternance de 12 à 24 mois en Île-de-France.<br>
+      Prête à rejoindre votre DSI et à apporter de la valeur dès le premier jour.
+    </p>
+    <div class="contact-links">
+      <a href="mailto:mbaloufatoumata033@gmail.com" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        mbaloufatoumata033@gmail.com
+      </a>
+      <a href="tel:+33784658865" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 012 1.18 2 2 0 014 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+        07 84 65 88 65
+      </a>
+      <a href="https://www.linkedin.com/in/mbaloufatoumata/" target="_blank" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
+    </div>
+    <div class="avail-row">
+      <div class="avail-dot"></div>
+      Disponible immédiatement — Île-de-France — Alternance 12 à 24 mois
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 M'Balou Fatoumata Camara</span>
+  <span>Technicienne Support IT · Administratrice Systèmes & Réseaux</span>
+</footer>
+
+<script>
+// ── Cursor
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx + 'px';
+  cursor.style.top = my + 'px';
+});
+
+function animRing() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.left = rx + 'px';
+  ring.style.top = ry + 'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+
+document.querySelectorAll('a, button, .hl-item, .skill-card, .exp-card, .project-card, .edu-item').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.width = '16px';
+    cursor.style.height = '16px';
+    ring.style.width = '52px';
+    ring.style.height = '52px';
+    ring.style.borderColor = 'rgba(59,130,246,.7)';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.width = '10px';
+    cursor.style.height = '10px';
+    ring.style.width = '36px';
+    ring.style.height = '36px';
+    ring.style.borderColor = 'rgba(59,130,246,.5)';
+  });
+});
+
+// ── Scroll progress
+const prog = document.getElementById('scroll-progress');
+window.addEventListener('scroll', () => {
+  const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+  prog.style.width = pct + '%';
+});
+
+// ── Reveal on scroll
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.07 });
+
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// ── Stat counter animation
+function animateCounter(el, target, suffix = '') {
+  const duration = 1800;
+  const start = performance.now();
+  const isNeg = target < 0;
+  const abs = Math.abs(target);
+  const update = now => {
+    const t = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - t, 3);
+    const val = Math.round(ease * abs);
+    el.textContent = (isNeg ? '−' : (suffix === '+' ? '+' : '')) + val + (suffix === '+' || suffix === '%' ? suffix : '');
+    if (t < 1) requestAnimationFrame(update);
+  };
+  requestAnimationFrame(update);
+}
+
+const statObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const nums = e.target.querySelectorAll('.stat-num');
+      nums.forEach(n => {
+        const txt = n.textContent.trim();
+        if (txt === '90%') { n.textContent = '0%'; animateCounter(n, 90, '%'); }
+        else if (txt === '40') { n.textContent = '0'; animateCounter(n, 40); }
+        else if (txt === '+50') { n.textContent = '+0'; animateCounter(n, 50, '+'); }
+        else if (txt === '−30%') { n.textContent = '−0%'; animateCounter(n, 30, '%'); }
+      });
+      statObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.4 });
+
+document.querySelectorAll('.stats-bar-inner').forEach(el => statObs.observe(el));
+
+// ── Parallax on hero card
+document.addEventListener('mousemove', e => {
+  const card = document.querySelector('.id-card');
+  if (!card) return;
+  const xRatio = (e.clientX / window.innerWidth - .5) * 10;
+  const yRatio = (e.clientY / window.innerHeight - .5) * 6;
+  card.style.transform = `perspective(800px) rotateY(${xRatio}deg) rotateX(${-yRatio}deg)`;
+});
+
+document.querySelector('.id-card')?.addEventListener('mouseleave', () => {
+  const card = document.querySelector('.id-card');
+  card.style.transform = '';
+  card.style.transition = 'transform .5s ease';
+  setTimeout(() => card.style.transition = '', 500);
+});
+
+// ── Active nav highlight
+const sections = document.querySelectorAll('section, .hero');
+const navLinks = document.querySelectorAll('.nav-links a');
+
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 120) current = s.id || '';
+  });
+  navLinks.forEach(a => {
+    a.style.color = a.getAttribute('href') === '#' + current ? 'var(--text)' : '';
+  });
+}, { passive: true });
+</script>
+</body>
+</html>
